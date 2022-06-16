@@ -1,19 +1,27 @@
-import fetch from 'node-fetch' //MUST DOWNLOAD FOR NODE TO USE HTTP REQUEST FECTH FUNCTION
+// import fetch from 'node-fetch' //MUST DOWNLOAD FOR NODE TO USE HTTP REQUEST FECTH FUNCTION
+const express = require('express');
+const app = express();
+const path = require('path');
+const router = express.Router();
+const bodyParser = require('body-parser');
 
-//TITLE
-fetch('https://data.sfgov.org/resource/yitu-d5am.json?title=A Jitney Elopement') //API CALL
-    .then((response) => response.json()) //TURNING RESPONSE TO A JSON() FILE
-    .then((posts) => { // USING POST TO DESCRIBE DATA
-        posts.forEach( post => { //LOOPING THRU DATA TO SET EACH AS ITS OWN FILE IN FIRESTORE
-        console.log(post)
-    });
+// const app = express()
+const PORT = process.env.PORT || 3000 
+
+// app.use(cors)
+// app.use(bodyparser)
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.static(path.join(__dirname, 'index.html')))
+
+
+router.get('/', function (req, res) {
+    res.sendFile(path.join(__dirname+'/index.html'));
+})
+router.get('/title=Looking',function(req, res){
+    res.send(path.join(__dirname+'https://data.sfgov.org/resource/yitu-d5am.json?title=Looking'));
 })
 
-//LOCATIONS
-fetch('https://data.sfgov.org/resource/yitu-d5am.json?release_year=1915') //API CALL
-    .then((response) => response.json()) //TURNING RESPONSE TO A JSON() FILE
-    .then((posts) => { // USING POST TO DESCRIBE DATA
-        posts.forEach( post => { //LOOPING THRU DATA TO SET EACH AS ITS OWN FILE IN FIRESTORE
-        console.log(post)
-    });
-})
+app.use('/',router)
+app.listen(PORT, () => console.log(`Server running on port ${PORT}`))  
+
+
