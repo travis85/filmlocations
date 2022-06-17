@@ -13,21 +13,34 @@
 
     <script>
         $(document).ready(async ()=>{
-           const data =  $.ajax({
-                url: "https://data.sfgov.org/resource/yitu-d5am.json",
-                    type: "GET",
-                    data: {
-                    "$limit" : 5000,
-                    "$$app_token" : "DkttwjqXC3eSzzeGzeZY39dEp"
-                    }
-                }).done(function(data) {
-                // alert("Retrieved " + data.length + " records from the dataset!");
-                console.log(data);
-            });
-            $('submit').click(async()=>{
-                console.log('yusagk')
-                const responseFromApi = data
-                $('#result').text('zhjsddbavhasb')
+        //    const data =  $.ajax({
+        //         url: "https://data.sfgov.org/resource/yitu-d5am.json",
+        //             type: "GET",
+        //             data: {
+        //             "$limit" : 5000,
+        //             "$$app_token" : "DkttwjqXC3eSzzeGzeZY39dEp"
+        //             }
+        //         }).done(function(data) {
+        //         // alert("Retrieved " + data.length + " records from the dataset!");
+        //         console.log(data);
+        //     });
+            $('#submit').click(async ()=>{
+                axios.get("https://data.sfgov.org/resource/yitu-d5am.json")
+                
+                .then((result) => {
+                    let resultData = []
+                    result.data.forEach(data => {
+                        console.log(data)
+                        if($("#title").val() === data.title){
+                            resultData.push(data.locations)
+                        }
+                        
+                    
+                   
+                    });
+                    $('#result').text(resultData)
+                })
+                
             })
 
 
@@ -40,9 +53,7 @@
     <form action="">
         <label for="title">Title</label>
         <input type="text" id="title" name="title"><br><br>
-        <label for="year">Release Year:</label>
-        <input type="text" id="year" name="year"><br><br>
-        <input type="submit" id="submit" value="Submit">
+        <input type="button" id="submit" value="Submit">
     </form>
     <p id="result"></p>
 </body>
