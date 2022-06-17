@@ -11,14 +11,11 @@ const PORT = process.env.PORT || 3000
 // app.use(cors)
 // app.use(bodyparser)
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static(path.join(__dirname, 'index.html')))
+app.use(express.static(path.join(__dirname, '/index.html')))
 
 
-router.get('/', function (req, res) {
+app.get('/', function (req, res) {
     res.sendFile(path.join(__dirname+'/index.html'));
-})
-router.get('/title=Looking',function(req, res){
-    res.send(path.join(__dirname+'https://data.sfgov.org/resource/yitu-d5am.json?title=Looking'));
 })
 
 app.use('/',router)
