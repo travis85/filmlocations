@@ -21,48 +21,36 @@
             })
         }
         movieData()
-
-
+        
         // EVENT LISTENER ON FORM INPUT THET DISPLAYS DATA IN P-TAG
         const input = document.querySelector('input');
-        const log = document.getElementById('values');
-        input.addEventListener('input', updateValue);
+        input.addEventListener('input', function(e){
+            let typedInput = e.target.value.toUpperCase()
+            let list = []
 
-        function updateValue(e) {
-            let typedInput = [e.target.value.toUpperCase()]
-
-            resultData.filter((movie) => {
-                let title = movie.title.toUpperCase()
+            resultData.filter((movie, index) => {
+                const title = movie.title.toUpperCase()
                 
-                if(title.startsWith(typedInput[0])){
-                    log.textContent = `Title: ${movie.title}; Location: ${movie.locations} `
+                if(title.match(typedInput)){
+                    console.log(typedInput,movie.title)
+                    list.push(`<p>Title: ${movie.title}; Location: ${movie.locations}</p>`)
                 }
-                for(let i = 1; i < typedInput.length; i++){
-                    if(typedInput[i] === title[i]){
-                        log.textContent = `Title: ${movie.title}; Location: ${movie.locations} `
-                    } 
-                }
-            })
-            if(typedInput[0].length === 0){
-                log.textContent = 'Please enter a Title'
-            }  
 
-            
-            
-        }
+            })
+            document.getElementById('values').innerHTML = list.join('')
+        });
+
     })
         
     </script>  
 </head>
 
-<body>
+<body >
     <form action="">
         <label for="title">Title</label>
         <input type="text" id="title" name="title"><br><br>
-        <!-- <input type="button" id="submit" value="Submit"> -->
     </form>
-    <p id="values"></p>
-
+    <div id="values"></div>
 
 
 </body>
