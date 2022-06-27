@@ -1,0 +1,15 @@
+#map {
+  height: 500px;
+  width: 500px;
+
+}
+body {
+  margin: 5rem;
+  display: grid;
+  grid-template-columns: auto;
+  justify-content: center;
+  
+
+}
+
+
