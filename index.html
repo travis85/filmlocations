@@ -2,58 +2,15 @@
 <html>
 
 <head>
-            <!-- <link rel="stylesheet" type="text/html" href="index.css"> -->
+    
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta charset="UTF-8">
-    <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script>
+    <!-- <script src="https://polyfill.io/v3/polyfill.min.js?features=default"></script> -->
     <!-- JQuery framework to  -->
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <!--make HTTP request from front end to back end -->
-  <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
-
-
-    <script>
-        $(document).ready(async ()=>{
-
-        //EXTRACTS ALL THE DATA ON PAGE LOAD
-        let resultData = []
-        const movieData =  async ()=> {
-            await axios.get("https://data.sfgov.org/resource/yitu-d5am.json")
-                .then((result) => {
-                result.data.forEach(data => {
-                    resultData.push(data)
-                });
-            })
-        }
-        movieData()
-        console.log(resultData)
-        // EVENT LISTENER ON FORM INPUT THET DISPLAYS DATA IN P-TAG
-        const input = document.querySelector('input');
-        input.addEventListener('input', function(e){
-            let typedInput = e.target.value.toUpperCase()
-            let list = []
-
-            resultData.filter((movie, index) => {
-                const title = movie.title.toUpperCase()
-                
-                if(title.match(typedInput)){
-                    // console.log(typedInput,movie.title)
-                    list.push(`<p>Title: ${movie.title}; Location: ${movie.locations}</p>`)
-                }
-
-            })
-            
-            document.getElementById('values').innerHTML = list.join('')
-            if(typedInput.length === 0){
-                document.getElementById('values').innerHTML = 'Enter A Valid Title'
-            }
-
-        });
-        
-
-    })
-        
-    </script>  
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <!--make HTTP request from front end to back end -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script> 
+    <link rel="stylesheet"  href="style.css">
 
 
 </head>
@@ -63,26 +20,16 @@
         <label for="title">Title</label>
         <input type="text" id="title" name="title"><br><br>
     </form>
+    <div id="map"></div>
     <div id="values"></div>
-    <div id="map" style="height: 500px; width: 500px"></div>
 
-
-    <script>
-        let map;
-        function initMap() {
-            map = new google.maps.Map(document.getElementById("map"), {
-                center: { lat: 37.7749, lng: -122.4194 },
-                zoom: 12,
-            });
-        }
-        window.initMap = initMap;
-    </script>
-
-<script async
-    src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJBkpJFZ3uFo65z4QUSf_GAqIYsXLH4bs&callback=initMap">
-</script>
-<!-- <script src="/map.js"></script> -->
+    <!-- MAP CLUSTER CDN -->
+    <script src="https://unpkg.com/@googlemaps/markerclusterer/dist/index.min.js"></script>
+    <!-- GOOGLE MAP API CDN -->
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAJBkpJFZ3uFo65z4QUSf_GAqIYsXLH4bs&callback=initMap&v=weekly" defer></script>
+    <script src="map.js"></script>
     
 </body>
 
 </html>
+<!-- AIzaSyAJBkpJFZ3uFo65z4QUSf_GAqIYsXLH4bs -->
