@@ -18,7 +18,7 @@ function initMap() {
     geocoder = new google.maps.Geocoder();
     map = new google.maps.Map(document.getElementById("map"), {
         center: { lat: 37.7749, lng: -122.4194 },
-        zoom: 12,
+        zoom: 11,
     });
 
     function codeAddress() {
@@ -43,10 +43,11 @@ function initMap() {
                 } else if (status === google.maps.GeocoderStatus.OVER_QUERY_LIMIT) { 
                     console.log("Waiting for Limit for item: "+ item);
                   
-                    delayFactor++;
-                    setTimeout(function () {
-                           codeAddress()
-                    }, delayFactor * 1100);
+                    
+                    setTimeout( async function () {
+                        await codeAddress()
+                        console.log('timeout')
+                    }, 500);
                 } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             }

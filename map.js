@@ -1,4 +1,5 @@
 // EXTRACTS ALL THE DATA ON PAGE LOAD
+// https://dev.socrata.com/foundry/data.sfgov.org/yitu-d5am
 let resultData = []
 const movieData =  async ()=> {
     await axios.get("https://data.sfgov.org/resource/yitu-d5am.json")
@@ -11,9 +12,8 @@ const movieData =  async ()=> {
 movieData()
 // console.log(resultData)
 // EVENT LISTENER ON FORM INPUT THET DISPLAYS DATA IN P-TAG
-const input = document.querySelector('input');
 let list = []
-
+const input = document.querySelector('input');
 input.addEventListener('input', function(e){
     let typedInput = e.target.value.toUpperCase()
 
@@ -21,7 +21,7 @@ input.addEventListener('input', function(e){
         const title = movie.title.toUpperCase()
         if(title.match(typedInput)){
             // console.log(typedInput,movie.title)
-            list.push(`<p>${movie.locations}</p>`)
+            list.push(movie.locations)
         }
     })
     
@@ -43,13 +43,12 @@ function initMap() {
     });
 
     function codeAddress() {
-        console.log(resultData)
-
-        var address = 'san francisco';
+        const cali = 'San Francisco, CA'
+        let address = `California @ Montgomery ${cali}`;
         geocoder.geocode({ 'address': address }, function (results, status) {
             if (status == 'OK') {
                 map.setCenter(results[0].geometry.location);
-                var marker = new google.maps.Marker({
+                let marker = new google.maps.Marker({
                     map: map,
                     position: results[0].geometry.location
                 });
